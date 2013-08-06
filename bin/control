@@ -2,15 +2,20 @@
 
 PATH=/bin/:/usr/bin:$PATH
 
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
+#source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 function start {
     export PYTHONPATH=$OPENSHIFT_CELERY_DIR/conf.d:$OPENSHIFT_REPO_DIR:$PYTHONPATH
-    usr/celeryd
+    usr/celeryd --pidfile=etc/celeryd.pid
 }
 
 function stop {
-    ps auxww | grep 'celeryd' | awk '{print $2}' | xargs kill -9
+    if ps `cat etc/celeryd.pid` > /dev/null
+    then
+        kill -9 `cat etc/celeryd.pid`
+    else
+        echo "nothing to kill"
+    fi
     echo "stopped"
 }
 
