@@ -1,0 +1,39 @@
+#!/bin/bash -e
+
+PATH=/bin/:/usr/bin:$PATH
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+function start {
+    export PYTHONPATH=$OPENSHIFT_CELERY_DIR/conf.d:$OPENSHIFT_REPO_DIR:$PYTHONPATH
+    usr/celeryd
+}
+
+function stop {
+    ps auxww | grep 'celeryd' | awk '{print $2}' | xargs kill -9
+    echo "stopped"
+}
+
+function restart {
+    echo "restarted"
+}
+
+function catchall {
+    echo "not yet implemented"
+}
+
+case "$1" in
+  start)       start ;;
+  stop)        stop ;;
+  restart)     restart ;;
+  status)      status ;;
+  reload)      catchall ;;
+  tidy)        catchall ;;
+  pre-build)   catchall ;;
+  build)       catchall ;;
+  deploy)      catchall ;;
+  post-deploy) catchall ;;
+  *)           exit 0
+esac
+
+exit 0
