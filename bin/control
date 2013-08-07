@@ -5,7 +5,7 @@ PATH=/bin/:/usr/bin:$PATH
 #source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
 function start {
-    export PYTHONPATH=$OPENSHIFT_CELERY_DIR/conf.d:$OPENSHIFT_REPO_DIR:$PYTHONPATH
+    export PYTHONPATH=$OPENSHIFT_PYTHON_DIR:$OPENSHIFT_CELERY_DIR/conf.d:$OPENSHIFT_REPO_DIR:$PYTHONPATH
     usr/celeryd --pidfile=etc/celeryd.pid
 }
 

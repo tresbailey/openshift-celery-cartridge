@@ -1,9 +1,13 @@
-#!/home/tres/Code/Scribble/screnv/bin/python
+#!/usr/bin/env python2.7
+
+import os; activate_this=os.path.join(os.path.dirname('%svirtenv/bin/' % os.getenv('OPENSHIFT_PYTHON_DIR')), 'activate_this.py'); execfile(activate_this, dict(__file__=activate_this)); del os, activate_this
+
 # EASY-INSTALL-ENTRY-SCRIPT: 'celery==3.0.21','console_scripts','celery'
 __requires__ = 'celery==3.0.21'
 import sys
 from pkg_resources import load_entry_point
 
-sys.exit(
-   load_entry_point('celery==3.0.21', 'console_scripts', 'celery')()
-)
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('celery==3.0.21', 'console_scripts', 'celery')()
+    )
