@@ -2,7 +2,7 @@
 BROKER_URL = 'mongodb://%s:%d/celery_tasks' % (<%= ENV['OPENSHIFT_MONGODB_DB_HOST'] %>, <%= ENV['OPENSHIFT_MONGODB_DB_PORT'] %>)
 
 # List of modules to import when celery starts.
-CELERY_IMPORTS = ("<%= ENV['OPENSHIFT_CELERY_IMPORTS %>", )
+CELERY_IMPORTS = ("<%= ENV['OPENSHIFT_CELERY_IMPORTS'] %>", )
 
 ## Using the database to store task state and results.
 CELERY_RESULT_BACKEND = "mongodb"
