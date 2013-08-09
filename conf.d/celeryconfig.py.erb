@@ -1,11 +1,40 @@
+<%
+broker_type = ENV.fetch('OPENSHIFT_CELERY_BROKER_TRANS', 'mongodb')
+if broker_type == "mongodb" %>
 ## Broker settings.
-BROKER_URL = 'mongodb://%s:%d/celery_tasks' % ("<%= ENV['OPENSHIFT_MONGODB_DB_HOST'] %>", <%= ENV['OPENSHIFT_MONGODB_DB_PORT'] %>)
-
-# List of modules to import when celery starts.
-CELERY_IMPORTS = ("<%= ENV['OPENSHIFT_CELERY_IMPORTS'] %>", )
-
+<% default_url = "localhost:27017/celery_tasks" %>
+BROKER_URL = 'mongodb://<%= ENV.fetch('OPENSHIFT_CELERY_BROKER_URL', default_url) %>'
 ## Using the database to store task state and results.
 CELERY_RESULT_BACKEND = "mongodb"
-CELERY_RESULT_DBURI = 'mongodb://%s:%d/celery_tasks' % ("<%= ENV['OPENSHIFT_MONGODB_DB_HOST'] %>", <%= ENV['OPENSHIFT_MONGODB_DB_PORT'] %>)
+CELERY_RESULT_DBURI = 'mongodb://<%= ENV.fetch('OPENSHIFT_CELERY_RESULT_BACKEND', default_url) %>'
 
-CELERY_ANNOTATIONS = {"tasks.add": {"rate_limit": "10/s"}}
+<% elsif broker_type == "amqp" %>
+## Broker settings
+BROKER_URL = 'amqp://<%= ENV.fetch('OPENSHIFT_CELERY_BROKER_URL', 'guest:guest@localhost:5672//') %>'
+<% elsif broker_type == "redis" %>
+## Broker settings
+BROKER_URL = 'redis://<%= ENV.fetch('OPENSHIFT_CELERY_BROKER_URL', 'localhost:6379/0') %>'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': <%= ENV.fetch('OPENSHIFT_CELERY_VISIBILITY_TIME', 3600) %> }
+CELERY_RESULT_BACKEND = 'redis://<%= ENV.fetch('OPENSHIFT_CELERY_RESULT_BACKEND', 'localhost:6379/0') %>'
+<% end %>
+# List of modules to import when celery starts.
+<% 
+    celery_imports = ENV.fetch('OPENSHIFT_CELERY_IMPORTS', '').split(',')
+    celery_imports = celery_imports.map { |a| "'" + a + "'" }
+    celery_imports = celery_imports.join(",")
+%>
+CELERY_IMPORTS = (<%= celery_imports %>, )
+
+
+CELERY_ANNOTATIONS = {"tasks.add": {"rate_limit": <%= ENV.fetch('OPENSHIFT_CELERY_RATE_LIM', '10/s') %>}}
+
+<%
+if File.exists? "#{ENV['OPENSHIFT_REPO_DIR']}/.openshift/celeryconfig.py"
+  %>
+import sys
+sys.path.insert(0, '<%= ENV['OPENSHIFT_REPO_DIR'] %>/.openshift/celeryconfig.py')
+
+import file
+<%
+end
+%>
