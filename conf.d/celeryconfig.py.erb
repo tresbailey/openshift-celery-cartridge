@@ -29,13 +29,3 @@ CELERY_IMPORTS = (<%= celery_imports %>, )
 
 CELERY_ANNOTATIONS = {"tasks.add": {"rate_limit": <%= ENV.fetch('OPENSHIFT_CELERY_RATE_LIM', '10/s') %>}}
 
-<%
-if File.exists? "#{ENV['OPENSHIFT_REPO_DIR']}/.openshift/celeryconfig.py"
-  %>
-import sys
-sys.path.insert(0, '<%= ENV['OPENSHIFT_REPO_DIR'] %>/.openshift/celeryconfig.py')
-
-import file
-<%
-end
-%>
