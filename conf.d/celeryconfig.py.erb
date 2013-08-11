@@ -1,3 +1,4 @@
+print 'Configuring celeryd with default cartridge config file'
 <%
 broker_type = ENV.fetch('OPENSHIFT_CELERY_BROKER_TRANS', 'mongodb')
 if broker_type == "mongodb" %>
