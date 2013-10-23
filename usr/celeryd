@@ -2,12 +2,12 @@
 
 import os; activate_this=os.path.join(os.path.dirname('%svirtenv/bin/' % os.getenv('OPENSHIFT_PYTHON_DIR')), 'activate_this.py'); execfile(activate_this, dict(__file__=activate_this)); del os, activate_this
 
-# EASY-INSTALL-ENTRY-SCRIPT: 'celery==3.0.21','console_scripts','celeryd'
-__requires__ = 'celery==3.0.21'
+# EASY-INSTALL-ENTRY-SCRIPT: 'celery==3.0.24','console_scripts','celeryd'
+__requires__ = 'celery==3.0.24'
 import sys
 from pkg_resources import load_entry_point
 
 if __name__ == '__main__':
     sys.exit(
-        load_entry_point('celery==3.0.21', 'console_scripts', 'celeryd')()
+        load_entry_point('celery==3.0.24', 'console_scripts', 'celeryd')()
     )
