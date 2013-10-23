@@ -29,3 +29,38 @@ CELERY_IMPORTS = (<%= celery_imports %>, )
 
 CELERY_ANNOTATIONS = {"tasks.add": {"rate_limit": <%= ENV.fetch('OPENSHIFT_CELERY_RATE_LIM', '10/s') %>}}
 
+"""
+BROKER_BACKEND = 'mongodb'
+CELERY_RESULT_BACKEND = 'mongodb'
+BROKER_HOST = os.environ.get('OPENSHIFT_MONGODB_DB_HOST')
+BROKER_PORT = os.environ.get('OPENSHIFT_MONGODB_DB_PORT')
+BROKER_USER = os.environ.get('OPENSHIFT_MONGODB_DB_USERNAME')
+BROKER_PASSWORD = os.environ.get('OPENSHIFT_MONGODB_DB_PASSWORD')
+BROKER_VHOST = 'celery_tasks'
+BROKER_URL = 'mongodb://admin:XCf67tq_BqKU@writeown-tresback.rhcloud.com/celery_tasks'
+CELERY_RESULT_BACKEND = 'mongodb://admin:XCf67tq_BqKU@writeown-tresback.rhcloud.com/celery_tasks'
+BROKER_URL = 'mongodb://admin:XCf67tq_BqKU@127.8.167.130/celery_tasks'
+#"%scelery_tasks" % os.environ.get('OPENSHIFT_MONGODB_DB_URL')
+BROKER_BACKEND = 'mongodb'
+CELERY_RESULT_BACKEND = 'mongodb'
+BROKER_HOST = os.environ.get('OPENSHIFT_MONGODB_DB_HOST')
+BROKER_PORT = os.environ.get('OPENSHIFT_MONGODB_DB_PORT')
+BROKER_TRANSPORT = 'mongodb'
+BROKER_VHOST = 'celery_tasks'
+CELERY_MONGODB_BACKEND_SETTINGS = { 
+    "host": os.environ.get('OPENSHIFT_MONGODB_DB_HOST'),
+    "port": os.environ.get('OPENSHIFT_MONGODB_DB_PORT'),
+    "database": 'celery_tasks',
+}   
+CELERY_MONGODB_BACKEND_SETTINGS = {
+    "host": os.environ.get('OPENSHIFT_MONGODB_DB_HOST'),
+    "port": os.environ.get('OPENSHIFT_MONGODB_DB_PORT'),
+    "database": 'celery_tasks',
+    "user": os.environ.get('OPENSHIFT_MONGODB_DB_USERNAME'),
+    "password": os.environ.get('OPENSHIFT_MONGODB_DB_PASSWORD')
+}
+
+BROKER_BACKEND = 'redis'
+BROKER_URL = "redis://127.8.167.131:16379/0"
+CELERY_RESULT_BACKEND = "redis://127.8.167.131:16379/0"
+"""
