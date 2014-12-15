@@ -1,3 +1,6 @@
+This Project is not Ready for Use - Please contact me if you are interested in working on it
+--------------------------------------------------------------------------------------------
+
 openshift-celery-cartridge
 ==========================
 
